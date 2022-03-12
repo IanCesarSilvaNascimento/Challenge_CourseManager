@@ -23,19 +23,13 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<Course>(x =>
         {
-           x.Property(x=>x.Duration).HasColumnType("SMALLDATETIME");
-           x.Property(x=>x.Status).HasColumnType("INTEGER");
-        });
-
-        modelBuilder.Entity<User>(x =>
-        {
-             x.Property(x=>x.Name).HasMaxLength(160).IsRequired();
+            x.Property(x => x.Duration).HasColumnType("SMALLDATETIME");
+            x.Property(x => x.Status).HasColumnType("INTEGER");
         });
 
         modelBuilder.Entity<Role>(x =>
         {
-            x.Property(x=>x.Name).HasMaxLength(160).IsRequired();
-                   
+            
         });
 
 

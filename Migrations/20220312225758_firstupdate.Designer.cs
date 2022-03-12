@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseManager.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220312202318_initial")]
-    partial class initial
+    [Migration("20220312225758_firstupdate")]
+    partial class firstupdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,15 +49,9 @@ namespace CourseManager.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(160)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Roles");
                 });
@@ -70,28 +64,30 @@ namespace CourseManager.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(160)
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CourseManager.Entities.Role", b =>
-                {
-                    b.HasOne("CourseManager.Entities.User", "User")
-                        .WithMany("Role")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("CourseManager.Entities.User", b =>
                 {
-                    b.Navigation("Role");
+                    b.HasOne("CourseManager.Entities.Role", null)
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CourseManager.Entities.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

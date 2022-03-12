@@ -12,8 +12,9 @@ public class EditorUserViewModel
     public string UserName { get; set; }
 
     [Required(ErrorMessage = "O perfil é obrigatório")]
-    public string Role { get; set; }
+    public string RoleName { get; set; }
 
-
+    // [Required(ErrorMessage = "O perfil é obrigatório")]
+    // public User user { get; set; }
     
 }

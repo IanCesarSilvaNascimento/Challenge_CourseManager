@@ -8,8 +8,9 @@ public class Role : Base
     }
 
     public string Name { get; set; }
-    public int UserId { get; set; }
-    // public User User { get; set; }
+    
+    public List<User> Users { get; set; } = new List<User>();
+  
 
 
 }

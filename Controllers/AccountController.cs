@@ -21,29 +21,25 @@ public class AccountController : ControllerBase
 
 
     [HttpPost("v1/[controller]/posts")]
-    public IActionResult PostAccount(
+    public async Task<IActionResult> PostAccountAsync(
         [FromBody] EditorUserViewModel model,
         [FromServices] AppDbContext context
     )
     {
-        var role = new Role
-        {
-            Name = model.Role
-        };
         var user = new User
         {
-            Name = model.UserName,
-        
+            Name = model.UserName
+        };                  
+        var role = new Role
+        {
+            Name = model.RoleName
         };
-        user.Role.Add(role);
-      
-
-        context.Users.Add(user);
-        context.SaveChanges();
-
-
+        role.Users.Add(user);
+        await context.Roles.AddAsync(role);
+        await context.SaveChangesAsync();
+    
         // return Created($"v1/[controller]/gets/{user}", user);
-        return Ok(user);
+        return Ok(role);
     }
 
 
@@ -58,8 +54,8 @@ public class AccountController : ControllerBase
     {
 
         var user = context.Users.FirstOrDefault(x => x.Name == model.UserName);
-        var role = context.Roles.FirstOrDefault(x=>x.Name==model.Role);
-        var token = tokenService.GenerateToken(user,role);
+        var role = context.Roles.FirstOrDefault(x => x.Name == model.RoleName);
+        var token = tokenService.GenerateToken(user, role);
 
         return Ok(token);
     }
