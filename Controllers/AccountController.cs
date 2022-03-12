@@ -58,7 +58,8 @@ public class AccountController : ControllerBase
     {
 
         var user = context.Users.FirstOrDefault(x => x.Name == model.UserName);
-        var token = tokenService.GenerateToken(user);
+        var role = context.Roles.FirstOrDefault(x=>x.Name==model.Role);
+        var token = tokenService.GenerateToken(user,role);
 
         return Ok(token);
     }
