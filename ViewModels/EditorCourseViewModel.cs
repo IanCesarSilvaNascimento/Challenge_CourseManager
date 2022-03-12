@@ -10,6 +10,6 @@ public class EditorCourseViewModel
     public string Title { get; set; }
 
     [Required(ErrorMessage = "O status é obrigatório")]
-    [EnumDataType(typeof(EStatus),ErrorMessage ="Digite 1 para Previsto, 2 para Em andamento e 3 para Concluído")]
-        public EStatus Status { get; set; }
+    [EnumDataType(typeof(EStatus), ErrorMessage = "Digite 1 para Previsto, 2 para Em andamento e 3 para Concluído")]
+    public EStatus Status { get; set; }
 }

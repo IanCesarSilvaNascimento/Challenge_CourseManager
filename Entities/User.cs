@@ -1,17 +1,13 @@
-using CourseManager.Enums;
-
 namespace CourseManager.Entities;
 
 public class User : Base
 {
-    public User(string name, ERole role)
+    public User()
     {
-        Name = name;
-        Role = role;
+        Role = new List<Role>();
     }
 
     public string Name { get; set; }
-
-    public ERole Role { get; set; }
+    public IList<Role> Role { get; set; }
 
 }

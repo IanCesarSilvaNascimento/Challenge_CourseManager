@@ -7,10 +7,12 @@ public class AppDbContext : DbContext
 
     public DbSet<Course> Courses { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Role> Roles { get; set; }
+
 
     // protected override void OnConfiguring(DbContextOptionsBuilder options)
     //        => options.UseSqlServer("Data source=(localdb)\\mssqllocaldb;Initial Catalog=CursoEFCore;Integrated Security=true");
-   
+
     // protected override void OnConfiguring(DbContextOptionsBuilder options)
     //     => options.UseSqlServer("Server=localhost,1433;Database=CourseManager;User ID=sa;Password=1q2w3e4r@#$");
 
@@ -21,21 +23,21 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<Course>(x =>
         {
-            x.ToTable("Course");
-            x.HasKey(x => x.Id);
-            x.Property(x => x.Id).ValueGeneratedOnAdd().UseIdentityColumn().HasColumnName("Id");
-            x.Property(x => x.Title).HasColumnType("VARCHAR").HasMaxLength(160).HasColumnName("Title");
-            x.Property(x => x.Status).HasConversion<string>().HasColumnName("Status");
-            x.Property(x => x.Duration).HasColumnType("SMALLDATETIME").HasColumnName("Duration");
+           x.Property(x=>x.Duration).HasColumnType("SMALLDATETIME");
+           x.Property(x=>x.Status).HasColumnType("INTEGER");
         });
 
         modelBuilder.Entity<User>(x =>
         {
-            x.ToTable("User");
-            x.HasKey(x => x.Id);
-            x.Property(x => x.Id).ValueGeneratedOnAdd().UseIdentityColumn().HasColumnName("Id");
-            x.Property(x => x.Name).HasColumnType("VARCHAR").HasMaxLength(160).HasColumnName("Name");
-            x.Property(x => x.Role).HasConversion<string>().HasColumnName("Role");
+             x.Property(x=>x.Name).HasMaxLength(160).IsRequired();
         });
+
+        modelBuilder.Entity<Role>(x =>
+        {
+            x.Property(x=>x.Name).HasMaxLength(160).IsRequired();
+                   
+        });
+
+
     }
 }
