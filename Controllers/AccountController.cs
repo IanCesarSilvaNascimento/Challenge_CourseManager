@@ -11,17 +11,19 @@ namespace CourseManager.Controllers;
 public class AccountController : ControllerBase
 {
     [HttpGet("v1/[controller]/gets/users")]
-    public IActionResult GetUsers([FromServices] AppDbContext context)
+    public IActionResult GetUsers(
+        [FromServices] AppDbContext context
+    )
         => Ok(context.Users.ToList());
 
     [HttpGet("v1/[controller]/gets/roles")]
-    public IActionResult GetRoles([FromServices] AppDbContext context)
+    public IActionResult GetRoles(
+        [FromServices] AppDbContext context
+    )
         => Ok(context.Roles.ToList());
 
-
-
     [HttpPost("v1/[controller]/posts")]
-    public async Task<IActionResult> PostAccountAsync(
+    public IActionResult CreateAccount(
         [FromBody] EditorUserViewModel model,
         [FromServices] AppDbContext context
     )
@@ -29,52 +31,34 @@ public class AccountController : ControllerBase
         var user = new User
         {
             Name = model.UserName
-        };                  
+        };
+
         var role = new Role
         {
             Name = model.RoleName
         };
         role.Users.Add(user);
-        await context.Roles.AddAsync(role);
-        await context.SaveChangesAsync();
-    
-        // return Created($"v1/[controller]/gets/{user}", user);
+
+        context.Roles.AddAsync(role);
+        context.SaveChangesAsync();
+
         return Ok(role);
     }
 
-
-
-    [HttpPost("v1/[controller]/logins")]
-    public IActionResult LoginAccount(
-       [FromServices] AppDbContext context,
-       [FromServices] TokenService tokenService,
-       [FromBody] EditorUserViewModel model
-
-   )
-    {
-
-        var user = context.Users.FirstOrDefault(x => x.Name == model.UserName);
-        var role = context.Roles.FirstOrDefault(x => x.Name == model.RoleName);
-        var token = tokenService.GenerateToken(user, role);
-
-        return Ok(token);
-    }
-
-
-
-
-    [HttpDelete("v1/[controller]/deletes/{id:int}")]
+    [HttpDelete("v1/[controller]/deletes")]
     public IActionResult DeleteAccount(
-        [FromRoute] int id,
-        [FromServices] AppDbContext context)
+        [FromServices] AppDbContext context
+    )
     {
-        var model = context.Users.FirstOrDefault(x => x.Id == id);
-        if (model == null)
-            return NotFound();
+        var lastUserCreated = context.Users.OrderBy(x => x.Id).LastOrDefault();
 
-        context.Users.Remove(model);
+        var lastRoleCreated = context.Roles.OrderBy(x => x.Id).LastOrDefault();
+
+        context.Users.Remove(lastUserCreated);
+        context.SaveChanges();
+        context.Roles.Remove(lastRoleCreated);
         context.SaveChanges();
 
-        return Ok(model);
+        return Ok();
     }
 }

@@ -4,14 +4,12 @@ namespace CourseManager.Entities;
 
 public class Course : Base
 {
-    public Course(string title, EStatus status)
+    public Course()
     {
-        Title = title;
-        Duration = DateTime.UtcNow.Date.ToLocalTime();
-        Status = status;
+                     
     }
 
-    public DateTime Duration { get; set; }
+    public DateTime Duration { get; set; } = DateTime.UtcNow.Date.ToLocalTime();
 
     public string Title { get; set; }
 
