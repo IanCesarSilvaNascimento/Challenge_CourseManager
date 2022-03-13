@@ -11,8 +11,7 @@ public class LoginController : ControllerBase
     [HttpPost("v1/[controller]/logins")]
     public IActionResult LoginAccount(
        [FromServices] AppDbContext context,
-       [FromServices] TokenService tokenService
-    )
+       [FromServices] TokenService tokenService)
     {
         var lastUserCreated = context.Users.OrderBy(x=>x.Id).LastOrDefault();
 

@@ -14,33 +14,41 @@ public class CourseController : ControllerBase
     [AllowAnonymous]
     [HttpGet("v1/gets")]
     public IActionResult GetCourse(
-        [FromServices] AppDbContext context
-    )
+        [FromServices] AppDbContext context)
     {
         var item = context.Courses.OrderBy(x => x.Id).ToList();
         return Ok(item);
     }
 
     [AllowAnonymous]
-    [HttpGet("v1/gets/{id:int}")]
-    public IActionResult GetCourseById(
-          [FromRoute] int id,
-          [FromServices] AppDbContext context
-    )
+    [HttpGet("v1/gets/courses-by-status/{status}")]
+    public IActionResult GetCourseByStatus(
+          [FromRoute] int status,
+          [FromServices] AppDbContext context)
     {
-        var course = context.Courses.FirstOrDefault(x => x.Id == id);
+        var course = context
+            .Courses
+            .Where(x=>((int)x.Status) == status)
+            .Select(x => new Course()
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Duration = x.Duration,
+                Status = x.Status
+            })
+            .ToList();
         if (course == null)
             return NotFound();
 
         return Ok(course);
     }
 
+   
     [Authorize(Roles = "admin,secretary")]
     [HttpPost("v1/posts")]
     public IActionResult PostCourse(
           [FromBody] EditorCourseViewModel model,
-          [FromServices] AppDbContext context
-    )
+          [FromServices] AppDbContext context)
     {
         var course = new Course
         {
@@ -58,8 +66,7 @@ public class CourseController : ControllerBase
     public IActionResult PutCourse(
            [FromRoute] int id,
            [FromBody] EditorCourseViewModel model,
-           [FromServices] AppDbContext context
-    )
+           [FromServices] AppDbContext context)
     {
         var course = context.Courses.FirstOrDefault(x => x.Id == id);
 
@@ -78,8 +85,7 @@ public class CourseController : ControllerBase
     [HttpDelete("v1/deletes/{id:int}")]
     public IActionResult DeleteCourse(
             [FromRoute] int id,
-            [FromServices] AppDbContext context
-    )
+            [FromServices] AppDbContext context)
     {
         var model = context.Courses.FirstOrDefault(x => x.Id == id);
         if (model == null)
@@ -90,4 +96,6 @@ public class CourseController : ControllerBase
 
         return Ok(model);
     }
+
+    
 }

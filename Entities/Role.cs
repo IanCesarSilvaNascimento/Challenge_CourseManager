@@ -2,10 +2,7 @@ namespace CourseManager.Entities;
 
 public class Role : Base
 {
-    public Role()
-    {
-
-    }
+    public Role(){}
 
     public string Name { get; set; }
     

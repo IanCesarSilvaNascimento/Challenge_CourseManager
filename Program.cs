@@ -26,13 +26,13 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-// Add service to the controllers.
+// Add service to controllers.
 builder.Services.AddControllers();
 
 //Add service token
 builder.Services.AddTransient<TokenService>();
 
-// Add service to the data context
+// Add service data context
 builder.Services.AddDbContext<AppDbContext>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

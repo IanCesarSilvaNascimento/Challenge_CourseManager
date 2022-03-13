@@ -11,6 +11,7 @@ public class TokenService
     public string GenerateToken(User user,Role role)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
+        
         var key = Encoding.ASCII.GetBytes(ConfigurationKey.JwtKey);
        
 
@@ -28,7 +29,9 @@ public class TokenService
                 new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256Signature)
         };
+
         var token = tokenHandler.CreateToken(tokenDescriptor);
+
         return tokenHandler.WriteToken(token);
     }
 }

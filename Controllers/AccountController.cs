@@ -12,21 +12,18 @@ public class AccountController : ControllerBase
 {
     [HttpGet("v1/[controller]/gets/users")]
     public IActionResult GetUsers(
-        [FromServices] AppDbContext context
-    )
+        [FromServices] AppDbContext context)
         => Ok(context.Users.ToList());
 
     [HttpGet("v1/[controller]/gets/roles")]
     public IActionResult GetRoles(
-        [FromServices] AppDbContext context
-    )
+        [FromServices] AppDbContext context)
         => Ok(context.Roles.ToList());
 
     [HttpPost("v1/[controller]/posts")]
     public IActionResult CreateAccount(
         [FromBody] EditorUserViewModel model,
-        [FromServices] AppDbContext context
-    )
+        [FromServices] AppDbContext context)
     {
         var user = new User
         {
@@ -47,8 +44,7 @@ public class AccountController : ControllerBase
 
     [HttpDelete("v1/[controller]/deletes")]
     public IActionResult DeleteAccount(
-        [FromServices] AppDbContext context
-    )
+        [FromServices] AppDbContext context)
     {
         var lastUserCreated = context.Users.OrderBy(x => x.Id).LastOrDefault();
 
