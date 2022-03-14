@@ -1,6 +1,5 @@
 using CourseManager.Data;
 using CourseManager.Entities;
-using CourseManager.Services;
 using CourseManager.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 

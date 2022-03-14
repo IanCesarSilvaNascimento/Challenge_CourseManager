@@ -1,6 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using CourseManager.Entities;
-
 
 namespace CourseManager.ViewModels;
 
@@ -14,4 +12,5 @@ public class EditorUserViewModel
     [Required(ErrorMessage = "O perfil é obrigatório")]
     public string RoleName { get; set; }
 
+   
 }

@@ -2,12 +2,15 @@ namespace CourseManager.Entities;
 
 public class Role : Base
 {
-    public Role(){}
+    public Role()
+    {
+        Users = new List<User>();
+    }
 
     public string Name { get; set; }
-    
-    public List<User> Users { get; set; } = new List<User>();
-  
+
+    public List<User> Users { get; set; } 
+
 
 
 }

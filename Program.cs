@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using CourseManager;
 using CourseManager.Data;
 using CourseManager.Services;
@@ -27,7 +28,11 @@ builder.Services.AddAuthentication(x =>
 });
 
 // Add service to controllers.
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x =>
+        {
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
+        });;
 
 //Add service token
 builder.Services.AddTransient<TokenService>();
