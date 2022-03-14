@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using CourseManager.Entities;
 using CourseManager.Enums;
 
 namespace CourseManager.ViewModels;
@@ -16,4 +17,5 @@ public class EditorCourseViewModel
     [Required(ErrorMessage = "O status é obrigatório")]
     [EnumDataType(typeof(EStatus), ErrorMessage = "Digite 1 para Previsto, 2 para Em andamento e 3 para Concluído")]
     public EStatus Status { get; set; }
+
 }

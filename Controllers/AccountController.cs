@@ -24,21 +24,48 @@ public class AccountController : ControllerBase
         [FromBody] EditorUserViewModel model,
         [FromServices] AppDbContext context)
     {
-        var user = new User
+        // Search the context for a role.Name equal to the model.RoleName
+        var verifyRoleContext = context
+                .Roles
+                .Where(x => x.Name == model.RoleName)
+                .Select(x => x.Name)
+                .Contains(model.RoleName);
+
+       //Given insert user in the role exists        
+        if (verifyRoleContext)
         {
-            Name = model.UserName
-        };
+            var item = context
+                .Roles
+                .FirstOrDefault(x => x.Name == model.RoleName);
+            
+            var user = new User
+            {
+                Name = model.UserName,
+                RoleId = item.Id
+            };
+            item.Users.Add(user);
+            context.SaveChanges();                     
 
-        var role = new Role
+            return Ok(item);
+
+        }
+        //Given create new role and insert user
+        else 
         {
-            Name = model.RoleName
-        };
-        role.Users.Add(user);
+            var user = new User
+            {
+                Name = model.UserName
+            };
+            var newRole = new Role
+            {
+                Name = model.RoleName
+            };
+            newRole.Users.Add(user);
+            context.Roles.Add(newRole);
+            context.SaveChanges();
+            return Ok(newRole);
+        }
 
-        context.Roles.AddAsync(role);
-        context.SaveChangesAsync();
-
-        return Ok(role);
     }
 
     [HttpDelete("v1")]
@@ -47,13 +74,9 @@ public class AccountController : ControllerBase
     {
         var lastUserCreated = context.Users.OrderBy(x => x.Id).LastOrDefault();
 
-        var lastRoleCreated = context.Roles.OrderBy(x => x.Id).LastOrDefault();
-
         context.Users.Remove(lastUserCreated);
         context.SaveChanges();
-        context.Roles.Remove(lastRoleCreated);
-        context.SaveChanges();
-
+    
         return Ok();
     }
 }
