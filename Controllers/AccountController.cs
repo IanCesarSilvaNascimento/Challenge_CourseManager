@@ -10,17 +10,17 @@ namespace CourseManager.Controllers;
 [Route("")]
 public class AccountController : ControllerBase
 {
-    [HttpGet("v1/[controller]/gets/users")]
+    [HttpGet("v1/[controller]/users")]
     public IActionResult GetUsers(
         [FromServices] AppDbContext context)
         => Ok(context.Users.ToList());
 
-    [HttpGet("v1/[controller]/gets/roles")]
+    [HttpGet("v1/[controller]/roles")]
     public IActionResult GetRoles(
         [FromServices] AppDbContext context)
         => Ok(context.Roles.ToList());
 
-    [HttpPost("v1/[controller]/posts")]
+    [HttpPost("v1/[controller]")]
     public IActionResult CreateAccount(
         [FromBody] EditorUserViewModel model,
         [FromServices] AppDbContext context)
@@ -42,7 +42,7 @@ public class AccountController : ControllerBase
         return Ok(role);
     }
 
-    [HttpDelete("v1/[controller]/deletes")]
+    [HttpDelete("v1/[controller]")]
     public IActionResult DeleteAccount(
         [FromServices] AppDbContext context)
     {

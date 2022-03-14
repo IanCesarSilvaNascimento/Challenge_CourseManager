@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace CourseManager.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("")]
 [Authorize]
 public class CourseController : ControllerBase
 {
     [AllowAnonymous]
-    [HttpGet("v1/gets")]
+    [HttpGet("v1/[controller]")]
     public IActionResult GetCourse(
         [FromServices] AppDbContext context)
     {
@@ -21,7 +21,7 @@ public class CourseController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpGet("v1/gets/courses-by-status/{status}")]
+    [HttpGet("v1/[controller]/{status}")]
     public IActionResult GetCourseByStatus(
           [FromRoute] int status,
           [FromServices] AppDbContext context)
@@ -45,7 +45,7 @@ public class CourseController : ControllerBase
 
    
     [Authorize(Roles = "admin,secretary")]
-    [HttpPost("v1/posts")]
+    [HttpPost("v1/[controller]")]
     public IActionResult PostCourse(
           [FromBody] EditorCourseViewModel model,
           [FromServices] AppDbContext context)
@@ -62,7 +62,7 @@ public class CourseController : ControllerBase
     }
 
     [Authorize(Roles = "admin,secretary")]
-    [HttpPut("v1/puts/{id:int}")]
+    [HttpPut("v1/[controller]/{id:int}")]
     public IActionResult PutCourse(
            [FromRoute] int id,
            [FromBody] EditorCourseViewModel model,
@@ -82,7 +82,7 @@ public class CourseController : ControllerBase
     }
 
     [Authorize(Roles = "admin")]
-    [HttpDelete("v1/deletes/{id:int}")]
+    [HttpDelete("v1/[controller]/{id:int}")]
     public IActionResult DeleteCourse(
             [FromRoute] int id,
             [FromServices] AppDbContext context)
