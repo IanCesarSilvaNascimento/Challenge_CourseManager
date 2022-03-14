@@ -8,7 +8,7 @@ namespace CourseManager.Controllers;
 [Route("")]
 public class LoginController : ControllerBase
 {   
-    [HttpPost("v1/[controller]/logins")]
+    [HttpPost("v1/[controller]")]
     public IActionResult LoginAccount(
        [FromServices] AppDbContext context,
        [FromServices] TokenService tokenService)
