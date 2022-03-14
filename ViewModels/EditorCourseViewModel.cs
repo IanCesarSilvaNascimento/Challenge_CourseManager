@@ -9,6 +9,10 @@ public class EditorCourseViewModel
     [StringLength(40, MinimumLength = 3, ErrorMessage = "O título do curso deve conter entre 3 e 40 caracteres")]
     public string Title { get; set; }
 
+    [Required(ErrorMessage = "A duração é obrigatório")]
+    [StringLength(40, MinimumLength = 3, ErrorMessage = "A duração do curso deve conter entre 3 e 40 caracteres")]
+    public string Duration { get; set; }
+
     [Required(ErrorMessage = "O status é obrigatório")]
     [EnumDataType(typeof(EStatus), ErrorMessage = "Digite 1 para Previsto, 2 para Em andamento e 3 para Concluído")]
     public EStatus Status { get; set; }

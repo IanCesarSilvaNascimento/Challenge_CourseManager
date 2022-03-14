@@ -53,7 +53,9 @@ public class CourseController : ControllerBase
         var course = new Course
         {
             Title = model.Title,
-            Status = model.Status
+            Duration = model.Duration,
+            Status = model.Status        
+           
         };
         context.Courses.Add(course);
         context.SaveChanges();
@@ -74,6 +76,7 @@ public class CourseController : ControllerBase
             return NotFound();
 
         course.Title = model.Title;
+        course.Duration = model.Duration;
         course.Status = model.Status;
 
         context.Courses.Update(course);

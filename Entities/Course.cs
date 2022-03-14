@@ -6,7 +6,7 @@ public class Course : Base
 {
     public Course(){}
 
-    public string Duration { get; set; } = "6 meses";
+    public string Duration { get; set; } 
 
     public string Title { get; set; }
 
