@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var key = Encoding.ASCII.GetBytes(ConfigurationKey.JwtKey);
+var key = Encoding.ASCII.GetBytes(ConstantConfiguration.JwtKey);
 
 //Add service Authentication
 builder.Services.AddAuthentication(x =>

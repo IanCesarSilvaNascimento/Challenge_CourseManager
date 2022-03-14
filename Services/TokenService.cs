@@ -12,7 +12,7 @@ public class TokenService
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         
-        var key = Encoding.ASCII.GetBytes(ConfigurationKey.JwtKey);
+        var key = Encoding.ASCII.GetBytes(ConstantConfiguration.JwtKey);
        
 
         var tokenDescriptor = new SecurityTokenDescriptor
@@ -23,7 +23,7 @@ public class TokenService
                 new(ClaimTypes.Name,user.Name),
                 new(ClaimTypes.Role,role.Name)
             }),
-
+            
             Expires = DateTime.UtcNow.AddHours(8),
             SigningCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(key),

@@ -26,9 +26,10 @@ public class CourseController : ControllerBase
           [FromRoute] int status,
           [FromServices] AppDbContext context)
     {
+
         var course = context
             .Courses
-            .Where(x=>((int)x.Status) == status)
+            .Where(x => ((int)x.Status) == status)
             .Select(x => new Course()
             {
                 Id = x.Id,
@@ -43,8 +44,8 @@ public class CourseController : ControllerBase
         return Ok(course);
     }
 
-   
-    [Authorize(Roles = "admin,secretary")]
+
+    [Authorize(Roles = ConstantConfiguration.AllRoles)]
     [HttpPost("v1/[controller]")]
     public IActionResult PostCourse(
           [FromBody] EditorCourseViewModel model,
@@ -54,8 +55,8 @@ public class CourseController : ControllerBase
         {
             Title = model.Title,
             Duration = model.Duration,
-            Status = model.Status        
-           
+            Status = model.Status
+
         };
         context.Courses.Add(course);
         context.SaveChanges();
@@ -63,7 +64,8 @@ public class CourseController : ControllerBase
         return Created($"get-courses/{course}", course);
     }
 
-    [Authorize(Roles = "admin,secretary")]
+
+    [Authorize(Roles = ConstantConfiguration.AllRoles)]
     [HttpPut("v1/[controller]/{id:int}")]
     public IActionResult PutCourse(
            [FromRoute] int id,
@@ -84,11 +86,13 @@ public class CourseController : ControllerBase
         return Ok(model);
     }
 
-    [Authorize(Roles = "admin")]
+
+    [Authorize(Roles = ConstantConfiguration.RoleAdmin)]
+
     [HttpDelete("v1/[controller]/{id:int}")]
     public IActionResult DeleteCourse(
-            [FromRoute] int id,
-            [FromServices] AppDbContext context)
+             [FromRoute] int id,
+             [FromServices] AppDbContext context)
     {
         var model = context.Courses.FirstOrDefault(x => x.Id == id);
         if (model == null)
@@ -100,5 +104,5 @@ public class CourseController : ControllerBase
         return Ok(model);
     }
 
-    
+
 }
