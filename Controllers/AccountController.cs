@@ -6,20 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace CourseManager.Controllers;
 
 [ApiController]
-[Route("")]
+[Route("[controller]")]
 public class AccountController : ControllerBase
 {
-    [HttpGet("v1/[controller]/users")]
+    [HttpGet("v1/users")]
     public IActionResult GetUsers(
         [FromServices] AppDbContext context)
         => Ok(context.Users.ToList());
 
-    [HttpGet("v1/[controller]/roles")]
+    [HttpGet("v1/roles")]
     public IActionResult GetRoles(
         [FromServices] AppDbContext context)
         => Ok(context.Roles.ToList());
 
-    [HttpPost("v1/[controller]")]
+    [HttpPost("v1")]
     public IActionResult CreateAccount(
         [FromBody] EditorUserViewModel model,
         [FromServices] AppDbContext context)
@@ -41,7 +41,7 @@ public class AccountController : ControllerBase
         return Ok(role);
     }
 
-    [HttpDelete("v1/[controller]")]
+    [HttpDelete("v1")]
     public IActionResult DeleteAccount(
         [FromServices] AppDbContext context)
     {

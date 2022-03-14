@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace CourseManager.Entities;
 
 public class Role : Base
@@ -9,7 +11,8 @@ public class Role : Base
 
     public string Name { get; set; }
 
-    public List<User> Users { get; set; } 
+  
+    public List<User> Users { get; set; }
 
 
 

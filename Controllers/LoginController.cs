@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace CourseManager.Controllers;
 
 [ApiController]
-[Route("")]
+[Route("[controller]")]
 public class LoginController : ControllerBase
 {   
-    [HttpPost("v1/[controller]")]
+    [HttpPost("v1")]
     public IActionResult LoginAccount(
        [FromServices] AppDbContext context,
        [FromServices] TokenService tokenService)
