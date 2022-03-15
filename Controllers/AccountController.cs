@@ -24,7 +24,7 @@ public class AccountController : ControllerBase
         [FromBody] EditorUserViewModel model,
         [FromServices] AppDbContext context)
     {
-        // Search the context for a role.Name equal to the model.RoleName
+        // Search in context for a role with the same name as the model
         var verifyRoleContext = context
                 .Roles
                 .Where(x => x.Name == model.RoleName)
