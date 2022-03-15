@@ -14,7 +14,7 @@ Você pode criar um cadastro informando um nome de usuário e nome da função.
 * **Leitura é realizado sem nenhum tipo de autorização** 
 
 ## Curso
-Você pode criar um cadastro informando um título , a duração do curso o status.
+Você pode criar um curso informando um título , a duração do curso e o status.
  ```csharp
     [Required(ErrorMessage = "O título é obrigatório")]
     [StringLength(40, MinimumLength = 3, ErrorMessage = "O título do curso deve conter entre 3 e 40 caracteres")]
