@@ -31,7 +31,7 @@ public class AccountController : ControllerBase
                 .Select(x => x.Name)
                 .Contains(model.RoleName);
 
-       //Insert user in the role exists        
+       // Insert user in the role exists and save       
         if (verifyRoleContext)
         {
             var item = context
@@ -49,7 +49,7 @@ public class AccountController : ControllerBase
             return Ok(item);
 
         }
-        //Given create new role and insert user
+        // Insert user in the new role and save
         else 
         {
             var user = new User
